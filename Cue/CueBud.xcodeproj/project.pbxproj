@@ -1,0 +1,535 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2C9D26C501A9215E156849C6 /* MetricsBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A6EEBE040DCA4877BF73C /* MetricsBadgeView.swift */; };
+		2D33E43426257B6F0505D8F7 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7A4EEA54D5B32DB48C9A5 /* OverlayView.swift */; };
+		37CBE5126E4DE073DD09FE40 /* PostureCoachTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD75C3C71943E9A89ADE133 /* PostureCoachTests.swift */; };
+		4078E755C93B03ABD7331685 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9A7CA47BC16F32A8AEC16D /* PermissionsManager.swift */; };
+		46D2D60B8E499652BF4511DC /* SpeechCoachTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3125CCD33813A444B706D5E /* SpeechCoachTests.swift */; };
+		55403896C4523CAAD5B72FC0 /* AudioLevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1751E324F5A0DD1B6DB8513 /* AudioLevelMeter.swift */; };
+		5DAA8FFC1FA0F332D7465592 /* SessionMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B56EFF7951D24EE9B5D714 /* SessionMetrics.swift */; };
+		6E2344A47CAA5AED1E8E8578 /* TipBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FC02930ED97E1D4C78620 /* TipBubbleView.swift */; };
+		713A88BB0DB34C5304DA9CE3 /* PostureCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035CC96E14CF6F33FD77B0AA /* PostureCoach.swift */; };
+		7E8B9AF8328ACF193A78A10E /* SpeechCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668B9F494D0DE25547ACDAF9 /* SpeechCoach.swift */; };
+		96EDA4FCBBC14BE53B670B74 /* TipEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8C0DCF72875F7A850B5209 /* TipEngineTests.swift */; };
+		99BB3BEAE6FA1FE247ECCBB1 /* CoachingTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA26BDAFE99B18094412802E /* CoachingTip.swift */; };
+		9D96C542310470E3496FA366 /* SessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F306AB08F80CF0AD6C65BC0 /* SessionViewModel.swift */; };
+		A000FA4BBBE58B8E8777E911 /* SpeechPaceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0708CEDB326F828519617ED2 /* SpeechPaceCalculator.swift */; };
+		A1ED5D3535B2CB9DFA3C5EEF /* VideoAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9587E3377A07C7F8FDB9F6F /* VideoAnalysisService.swift */; };
+		A5CB7F04C2FC34CFC13CFF42 /* FillerWordDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A246BB5D8BF0D3452CB3C44 /* FillerWordDetectorTests.swift */; };
+		B3A3855E1FC3278AB085CBDC /* PostureSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CECB1BF9F645076E9DA892B /* PostureSnapshot.swift */; };
+		C2E32071C5BEBCB191BEC13C /* SpeechSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D5B8E494DD2CE32E2073FE /* SpeechSegment.swift */; };
+		C5F54B392A42E96F064AE6D8 /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AB4AC4D5825CD9AFB37AA3 /* SessionSummaryView.swift */; };
+		CB0A38B96F70EDB801E1BAA9 /* TipEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36699CA1D387B323E79B8EB9 /* TipEngine.swift */; };
+		D0241EC71736DD6AC613C924 /* AudioAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE7F4A330E53A4206AAF4CF /* AudioAnalysisService.swift */; };
+		DD2FBC312397E967C44914FF /* FillerWordDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A2DE32AE2372E7BB745EFC /* FillerWordDetector.swift */; };
+		E23A7426F9898A2D0320D7DF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF47817D9B10B8101CA1B2E /* OnboardingView.swift */; };
+		EC100D9EA6E38284F177428B /* CueBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE6865DD22DB5887C23CEC6 /* CueBudApp.swift */; };
+		FE8AECDCF271B5A5119AD84C /* OverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFABD7EC60D5D790EEBCA4C1 /* OverlayViewModel.swift */; };
+		FF06A3E606AAB79E1EC7BF29 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9BFFACB276DFD8546D2DE4 /* SettingsView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6101173D7F9F6B70FE070FDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6F4B7F21E76CF89C7CACEB94 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 406C29B7A0DBCD9D3F41EBF1;
+			remoteInfo = CueBud;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		035CC96E14CF6F33FD77B0AA /* PostureCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostureCoach.swift; sourceTree = "<group>"; };
+		050EA4F44FD007EFB5753064 /* CueBud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CueBud.entitlements; sourceTree = "<group>"; };
+		0708CEDB326F828519617ED2 /* SpeechPaceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechPaceCalculator.swift; sourceTree = "<group>"; };
+		1EF47817D9B10B8101CA1B2E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2A1A6EEBE040DCA4877BF73C /* MetricsBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsBadgeView.swift; sourceTree = "<group>"; };
+		2CECB1BF9F645076E9DA892B /* PostureSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostureSnapshot.swift; sourceTree = "<group>"; };
+		34B56EFF7951D24EE9B5D714 /* SessionMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMetrics.swift; sourceTree = "<group>"; };
+		36699CA1D387B323E79B8EB9 /* TipEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipEngine.swift; sourceTree = "<group>"; };
+		4F306AB08F80CF0AD6C65BC0 /* SessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewModel.swift; sourceTree = "<group>"; };
+		5A246BB5D8BF0D3452CB3C44 /* FillerWordDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordDetectorTests.swift; sourceTree = "<group>"; };
+		668B9F494D0DE25547ACDAF9 /* SpeechCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCoach.swift; sourceTree = "<group>"; };
+		76761F27ECD36B881808937B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		84ABDC99B534358B84F068E3 /* CueBud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CueBud.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		85D5B8E494DD2CE32E2073FE /* SpeechSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSegment.swift; sourceTree = "<group>"; };
+		87AB4AC4D5825CD9AFB37AA3 /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
+		8F9A7CA47BC16F32A8AEC16D /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
+		99F7A4EEA54D5B32DB48C9A5 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		AFABD7EC60D5D790EEBCA4C1 /* OverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModel.swift; sourceTree = "<group>"; };
+		B9587E3377A07C7F8FDB9F6F /* VideoAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnalysisService.swift; sourceTree = "<group>"; };
+		BF6FC02930ED97E1D4C78620 /* TipBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipBubbleView.swift; sourceTree = "<group>"; };
+		BF9BFFACB276DFD8546D2DE4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		C930E1A13DFE7C6E45482D2F /* CueBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CueBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA26BDAFE99B18094412802E /* CoachingTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachingTip.swift; sourceTree = "<group>"; };
+		CDE7F4A330E53A4206AAF4CF /* AudioAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnalysisService.swift; sourceTree = "<group>"; };
+		CFD75C3C71943E9A89ADE133 /* PostureCoachTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostureCoachTests.swift; sourceTree = "<group>"; };
+		D1751E324F5A0DD1B6DB8513 /* AudioLevelMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioLevelMeter.swift; sourceTree = "<group>"; };
+		DBE6865DD22DB5887C23CEC6 /* CueBudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueBudApp.swift; sourceTree = "<group>"; };
+		E3125CCD33813A444B706D5E /* SpeechCoachTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCoachTests.swift; sourceTree = "<group>"; };
+		E8A2DE32AE2372E7BB745EFC /* FillerWordDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordDetector.swift; sourceTree = "<group>"; };
+		FC8C0DCF72875F7A850B5209 /* TipEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipEngineTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		28F9E543C97D13CCD5C2F9E4 /* CueBud */ = {
+			isa = PBXGroup;
+			children = (
+				050EA4F44FD007EFB5753064 /* CueBud.entitlements */,
+				DBE6865DD22DB5887C23CEC6 /* CueBudApp.swift */,
+				76761F27ECD36B881808937B /* Info.plist */,
+				5232F5071541B78629CD44A8 /* Models */,
+				C06BFB49A91FC6625BE64EB4 /* Services */,
+				4D1D0EBEFDC76445467C37ED /* Utilities */,
+				5957909200B8D903F2A4FB42 /* ViewModels */,
+				A29B07132FE761DC275D47B8 /* Views */,
+			);
+			path = CueBud;
+			sourceTree = "<group>";
+		};
+		4D1D0EBEFDC76445467C37ED /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D1751E324F5A0DD1B6DB8513 /* AudioLevelMeter.swift */,
+				E8A2DE32AE2372E7BB745EFC /* FillerWordDetector.swift */,
+				8F9A7CA47BC16F32A8AEC16D /* PermissionsManager.swift */,
+				0708CEDB326F828519617ED2 /* SpeechPaceCalculator.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		50740955182A79FCBB9215CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84ABDC99B534358B84F068E3 /* CueBud.app */,
+				C930E1A13DFE7C6E45482D2F /* CueBudTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5232F5071541B78629CD44A8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CA26BDAFE99B18094412802E /* CoachingTip.swift */,
+				2CECB1BF9F645076E9DA892B /* PostureSnapshot.swift */,
+				34B56EFF7951D24EE9B5D714 /* SessionMetrics.swift */,
+				85D5B8E494DD2CE32E2073FE /* SpeechSegment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5957909200B8D903F2A4FB42 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AFABD7EC60D5D790EEBCA4C1 /* OverlayViewModel.swift */,
+				4F306AB08F80CF0AD6C65BC0 /* SessionViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A29B07132FE761DC275D47B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2A1A6EEBE040DCA4877BF73C /* MetricsBadgeView.swift */,
+				1EF47817D9B10B8101CA1B2E /* OnboardingView.swift */,
+				99F7A4EEA54D5B32DB48C9A5 /* OverlayView.swift */,
+				87AB4AC4D5825CD9AFB37AA3 /* SessionSummaryView.swift */,
+				BF9BFFACB276DFD8546D2DE4 /* SettingsView.swift */,
+				BF6FC02930ED97E1D4C78620 /* TipBubbleView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B393F5C2F68659520BE59454 = {
+			isa = PBXGroup;
+			children = (
+				28F9E543C97D13CCD5C2F9E4 /* CueBud */,
+				D2652FA23B2158F127A63330 /* CueBudTests */,
+				50740955182A79FCBB9215CB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C06BFB49A91FC6625BE64EB4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CDE7F4A330E53A4206AAF4CF /* AudioAnalysisService.swift */,
+				035CC96E14CF6F33FD77B0AA /* PostureCoach.swift */,
+				668B9F494D0DE25547ACDAF9 /* SpeechCoach.swift */,
+				36699CA1D387B323E79B8EB9 /* TipEngine.swift */,
+				B9587E3377A07C7F8FDB9F6F /* VideoAnalysisService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D2652FA23B2158F127A63330 /* CueBudTests */ = {
+			isa = PBXGroup;
+			children = (
+				5A246BB5D8BF0D3452CB3C44 /* FillerWordDetectorTests.swift */,
+				CFD75C3C71943E9A89ADE133 /* PostureCoachTests.swift */,
+				E3125CCD33813A444B706D5E /* SpeechCoachTests.swift */,
+				FC8C0DCF72875F7A850B5209 /* TipEngineTests.swift */,
+			);
+			path = CueBudTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1E1B4F15BA7437ED964FD7AB /* CueBudTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71696753842E9374B274AD72 /* Build configuration list for PBXNativeTarget "CueBudTests" */;
+			buildPhases = (
+				38AC3F500B718A520E0F79BF /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				44DBA7CB7EE6FEC6BDDF9438 /* PBXTargetDependency */,
+			);
+			name = CueBudTests;
+			packageProductDependencies = (
+			);
+			productName = CueBudTests;
+			productReference = C930E1A13DFE7C6E45482D2F /* CueBudTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		406C29B7A0DBCD9D3F41EBF1 /* CueBud */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91DDBBB8993F0DD366EB128C /* Build configuration list for PBXNativeTarget "CueBud" */;
+			buildPhases = (
+				E13CAF969C8D0D00EDA7CA2E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CueBud;
+			packageProductDependencies = (
+			);
+			productName = CueBud;
+			productReference = 84ABDC99B534358B84F068E3 /* CueBud.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6F4B7F21E76CF89C7CACEB94 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 07B93360DF0F4065D48799A8 /* Build configuration list for PBXProject "CueBud" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = B393F5C2F68659520BE59454;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 50740955182A79FCBB9215CB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				406C29B7A0DBCD9D3F41EBF1 /* CueBud */,
+				1E1B4F15BA7437ED964FD7AB /* CueBudTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		38AC3F500B718A520E0F79BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5CB7F04C2FC34CFC13CFF42 /* FillerWordDetectorTests.swift in Sources */,
+				37CBE5126E4DE073DD09FE40 /* PostureCoachTests.swift in Sources */,
+				46D2D60B8E499652BF4511DC /* SpeechCoachTests.swift in Sources */,
+				96EDA4FCBBC14BE53B670B74 /* TipEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E13CAF969C8D0D00EDA7CA2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0241EC71736DD6AC613C924 /* AudioAnalysisService.swift in Sources */,
+				55403896C4523CAAD5B72FC0 /* AudioLevelMeter.swift in Sources */,
+				99BB3BEAE6FA1FE247ECCBB1 /* CoachingTip.swift in Sources */,
+				EC100D9EA6E38284F177428B /* CueBudApp.swift in Sources */,
+				DD2FBC312397E967C44914FF /* FillerWordDetector.swift in Sources */,
+				2C9D26C501A9215E156849C6 /* MetricsBadgeView.swift in Sources */,
+				E23A7426F9898A2D0320D7DF /* OnboardingView.swift in Sources */,
+				2D33E43426257B6F0505D8F7 /* OverlayView.swift in Sources */,
+				FE8AECDCF271B5A5119AD84C /* OverlayViewModel.swift in Sources */,
+				4078E755C93B03ABD7331685 /* PermissionsManager.swift in Sources */,
+				713A88BB0DB34C5304DA9CE3 /* PostureCoach.swift in Sources */,
+				B3A3855E1FC3278AB085CBDC /* PostureSnapshot.swift in Sources */,
+				5DAA8FFC1FA0F332D7465592 /* SessionMetrics.swift in Sources */,
+				C5F54B392A42E96F064AE6D8 /* SessionSummaryView.swift in Sources */,
+				9D96C542310470E3496FA366 /* SessionViewModel.swift in Sources */,
+				FF06A3E606AAB79E1EC7BF29 /* SettingsView.swift in Sources */,
+				7E8B9AF8328ACF193A78A10E /* SpeechCoach.swift in Sources */,
+				A000FA4BBBE58B8E8777E911 /* SpeechPaceCalculator.swift in Sources */,
+				C2E32071C5BEBCB191BEC13C /* SpeechSegment.swift in Sources */,
+				6E2344A47CAA5AED1E8E8578 /* TipBubbleView.swift in Sources */,
+				CB0A38B96F70EDB801E1BAA9 /* TipEngine.swift in Sources */,
+				A1ED5D3535B2CB9DFA3C5EEF /* VideoAnalysisService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		44DBA7CB7EE6FEC6BDDF9438 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 406C29B7A0DBCD9D3F41EBF1 /* CueBud */;
+			targetProxy = 6101173D7F9F6B70FE070FDE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		34F8DD8DBA0EE2215CFD08EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuebud.CueBudTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CueBud.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CueBud";
+			};
+			name = Release;
+		};
+		35461FA03CDE180299D9F4A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuebud.CueBudTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CueBud.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CueBud";
+			};
+			name = Debug;
+		};
+		6BD825CF788FB7ECAC055D02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6C4DF39261D9D4C229187BF2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B92D26FE18F4DFE74C623825 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CueBud/CueBud.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CueBud/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CueBud;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCameraUsageDescription = "CueBud needs camera access to analyze your posture and facial expressions during calls.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "CueBud needs microphone access to analyze your speech patterns and provide real-time coaching tips during calls.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "CueBud uses on-device speech recognition to detect filler words and speaking pace. Audio never leaves your device.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuebud.app;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F0B8CC17FB813992744E623F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CueBud/CueBud.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CueBud/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CueBud;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCameraUsageDescription = "CueBud needs camera access to analyze your posture and facial expressions during calls.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "CueBud needs microphone access to analyze your speech patterns and provide real-time coaching tips during calls.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "CueBud uses on-device speech recognition to detect filler words and speaking pace. Audio never leaves your device.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cuebud.app;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		07B93360DF0F4065D48799A8 /* Build configuration list for PBXProject "CueBud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BD825CF788FB7ECAC055D02 /* Debug */,
+				6C4DF39261D9D4C229187BF2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		71696753842E9374B274AD72 /* Build configuration list for PBXNativeTarget "CueBudTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				35461FA03CDE180299D9F4A5 /* Debug */,
+				34F8DD8DBA0EE2215CFD08EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		91DDBBB8993F0DD366EB128C /* Build configuration list for PBXNativeTarget "CueBud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0B8CC17FB813992744E623F /* Debug */,
+				B92D26FE18F4DFE74C623825 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6F4B7F21E76CF89C7CACEB94 /* Project object */;
+}

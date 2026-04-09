@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>CueBud needs microphone access to analyze your speech patterns and provide real-time coaching tips during calls.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>CueBud needs camera access to analyze your posture and facial expressions during calls.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>CueBud uses on-device speech recognition to detect filler words and speaking pace. Audio never leaves your device.</string>
+</dict>
+</plist>

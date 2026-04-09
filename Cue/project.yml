@@ -1,0 +1,65 @@
+name: CueBud
+options:
+  bundleIdPrefix: com.cuebud
+  deploymentTarget:
+    macOS: "15.0"
+  xcodeVersion: "1600"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+
+targets:
+  CueBud:
+    type: application
+    platform: macOS
+    sources:
+      - CueBud
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cuebud.app
+        INFOPLIST_FILE: CueBud/Info.plist
+        CODE_SIGN_ENTITLEMENTS: CueBud/CueBud.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: CueBud
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "CueBud needs microphone access to analyze your speech patterns and provide real-time coaching tips during calls."
+        INFOPLIST_KEY_NSCameraUsageDescription: "CueBud needs camera access to analyze your posture and facial expressions during calls."
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "CueBud uses on-device speech recognition to detect filler words and speaking pace. Audio never leaves your device."
+        ENABLE_HARDENED_RUNTIME: YES
+      debug:
+        ENABLE_TESTABILITY: YES
+
+  CueBudTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - CueBudTests
+    dependencies:
+      - target: CueBud
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.cuebud.CueBudTests
+        GENERATE_INFOPLIST_FILE: YES
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/CueBud.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CueBud"
+
+schemes:
+  CueBud:
+    build:
+      targets:
+        CueBud: all
+        CueBudTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - CueBudTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
