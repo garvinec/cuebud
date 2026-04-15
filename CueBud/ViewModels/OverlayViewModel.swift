@@ -29,7 +29,7 @@ final class OverlayViewModel: ObservableObject {
         // Bind speech metrics — throttle to avoid rapid redraws
         session.speechCoach.$currentWPM
             .receive(on: DispatchQueue.main)
-            .throttle(for: .seconds(1), scheduler: DispatchQueue.main, latest: true)
+            .throttle(for: .seconds(2), scheduler: DispatchQueue.main, latest: true)
             .assign(to: &$currentWPM)
 
         session.speechCoach.$recentFillerCount
