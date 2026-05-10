@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct CueBudApp: App {
+    @StateObject private var auth = AuthService()
     @StateObject private var permissions = PermissionsManager()
     @StateObject private var sessionVM = SessionViewModel()
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
@@ -10,19 +11,27 @@ struct CueBudApp: App {
         // Floating overlay window
         Window("CueBud", id: "overlay") {
             Group {
-                if hasCompletedOnboarding {
+                if auth.currentUser == nil {
+                    LoginView(auth: auth)
+                } else if !hasCompletedOnboarding {
+                    OnboardingView(permissions: permissions) {
+                        hasCompletedOnboarding = true
+                    }
+                    .onAppear { configureOverlayWindow() }
+                } else {
                     OverlayView(
                         overlayVM: OverlayViewModel(session: sessionVM),
                         sessionVM: sessionVM
                     )
-                } else {
-                    OnboardingView(permissions: permissions) {
-                        hasCompletedOnboarding = true
-                    }
+                    .onAppear { configureOverlayWindow() }
                 }
             }
-            .onAppear {
-                configureOverlayWindow()
+            .task { auth.refreshSessionInBackground() }
+            .onOpenURL { url in auth.handleCallbackURL(url) }
+            .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { note in
+                if let w = note.object as? NSWindow, w.title == "Settings" {
+                    w.level = .floating
+                }
             }
         }
         .windowStyle(.plain)
@@ -43,6 +52,7 @@ struct CueBudApp: App {
         // Settings window
         Settings {
             SettingsView()
+                .environmentObject(auth)
         }
 
         // Menu bar extra
@@ -61,8 +71,6 @@ struct CueBudApp: App {
                 window.backgroundColor = .clear
                 window.hasShadow = false
                 window.isMovableByWindowBackground = true
-
-                // Keep it on top
                 window.hidesOnDeactivate = false
             }
         }
@@ -87,8 +95,8 @@ struct MenuBarView: View {
 
             Divider()
 
-            Button("Settings...") {
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+            SettingsLink {
+                Text("Settings...")
             }
             .keyboardShortcut(",", modifiers: .command)
 

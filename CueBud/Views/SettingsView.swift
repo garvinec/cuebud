@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Preferences window for adjusting coaching sensitivity
 struct SettingsView: View {
+    @EnvironmentObject var auth: AuthService
     @AppStorage("maxFillersPerMinute") private var maxFillers: Int = 3
     @AppStorage("maxWPM") private var maxWPM: Double = 170
     @AppStorage("minWPM") private var minWPM: Double = 100
@@ -12,6 +12,23 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section("Account") {
+                if let user = auth.currentUser {
+                    LabeledContent("Email", value: user.email)
+
+                    if let joinedAt = user.joinedAt {
+                        LabeledContent("Member since", value: joinedAt.formatted(.dateTime.month(.wide).day().year()))
+                    }
+                }
+
+                Button(role: .destructive) {
+                    NSApp.keyWindow?.close()
+                    auth.signOut()
+                } label: {
+                    Text("Sign Out")
+                }
+            }
+
             Section("Speech Coaching") {
                 Toggle("Enable speech tips", isOn: $showSpeechTips)
 
@@ -57,6 +74,6 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: 450)
+        .frame(width: 400, height: 540)
     }
 }

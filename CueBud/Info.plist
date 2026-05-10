@@ -8,5 +8,14 @@
     <string>CueBud needs camera access to analyze your posture and facial expressions during calls.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>CueBud uses on-device speech recognition to detect filler words and speaking pace. Audio never leaves your device.</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.689290117585-5mps9d5la1t4m72pa78b8je7lqqku0rq</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>
