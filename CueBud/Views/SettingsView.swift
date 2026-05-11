@@ -11,6 +11,26 @@ struct SettingsView: View {
     @AppStorage("showSpeechTips") private var showSpeechTips = true
 
     var body: some View {
+        if auth.currentUser != nil {
+            signedInForm
+        } else {
+            signedOutForm
+        }
+    }
+
+    private var signedOutForm: some View {
+        Form {
+            Section("Account") {
+                Button("Sign In") {
+                    NSApp.keyWindow?.close()
+                }
+            }
+        }
+        .formStyle(.grouped)
+        .frame(width: 400, height: 100)
+    }
+
+    private var signedInForm: some View {
         Form {
             Section("Account") {
                 if let user = auth.currentUser {

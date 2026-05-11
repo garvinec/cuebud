@@ -10,7 +10,6 @@ enum KeychainHelper {
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
             kSecAttrAccount: key,
-            kSecUseDataProtectionKeychain: true
         ]
         SecItemDelete(deleteQuery as CFDictionary)
         let attributes: [CFString: Any] = [
@@ -18,10 +17,11 @@ enum KeychainHelper {
             kSecAttrService: service,
             kSecAttrAccount: key,
             kSecValueData: data,
-            kSecAttrAccessible: kSecAttrAccessibleWhenUnlocked,
-            kSecUseDataProtectionKeychain: true
         ]
-        SecItemAdd(attributes as CFDictionary, nil)
+        let status = SecItemAdd(attributes as CFDictionary, nil)
+        if status != errSecSuccess {
+            print("[KeychainHelper] save failed for key '\(key)': \(status)")
+        }
     }
 
     static func load(forKey key: String) -> String? {
@@ -31,7 +31,6 @@ enum KeychainHelper {
             kSecAttrAccount: key,
             kSecReturnData: true,
             kSecMatchLimit: kSecMatchLimitOne,
-            kSecUseDataProtectionKeychain: true
         ]
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -44,7 +43,6 @@ enum KeychainHelper {
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
             kSecAttrAccount: key,
-            kSecUseDataProtectionKeychain: true
         ]
         SecItemDelete(query as CFDictionary)
     }

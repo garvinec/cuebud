@@ -42,9 +42,32 @@ final class SpeechCoach: ObservableObject {
     init(audioService: AudioAnalysisService) {
         self.audioService = audioService
         setupSubscriptions()
+        loadSettings()
+    }
+
+    private func loadSettings() {
+        let ud = UserDefaults.standard
+        let fillers = ud.integer(forKey: "maxFillersPerMinute")
+        if fillers > 0 { maxFillersPerMinute = fillers }
+        let fast = ud.double(forKey: "maxWPM")
+        if fast > 0 { maxWPM = fast }
+        let slow = ud.double(forKey: "minWPM")
+        if slow > 0 { minWPM = slow }
+        let rambling = ud.double(forKey: "ramblingThreshold")
+        if rambling > 0 { ramblingThreshold = rambling }
+    }
+
+    private func emit(_ tip: CoachingTip) {
+        guard UserDefaults.standard.object(forKey: "showSpeechTips") as? Bool ?? true else { return }
+        tipSubject.send(tip)
     }
 
     private func setupSubscriptions() {
+        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.loadSettings() }
+            .store(in: &cancellables)
+
         // Monitor partial transcripts for fillers + pace (every 1s, not 2s)
         audioService.partialTranscriptSubject
             .receive(on: DispatchQueue.main)
@@ -97,7 +120,7 @@ final class SpeechCoach: ObservableObject {
                 recentFillerCount = fillerCountInWindow
 
                 if fillerCountInWindow > maxFillersPerMinute {
-                    tipSubject.send(CoachingTip(
+                    emit(CoachingTip(
                         type: .fillerWords,
                         message: "Try to reduce filler words (\(fillerCountInWindow) in the last minute)",
                         severity: .suggestion
@@ -124,7 +147,7 @@ final class SpeechCoach: ObservableObject {
             if fastSpeechStart == nil {
                 fastSpeechStart = now
             } else if now.timeIntervalSince(fastSpeechStart!) > fastSpeechDuration {
-                tipSubject.send(CoachingTip(
+                emit(CoachingTip(
                     type: .speakingTooFast,
                     message: "Slow down — you're at \(Int(wpm)) words per minute",
                     severity: .suggestion
@@ -140,7 +163,7 @@ final class SpeechCoach: ObservableObject {
             if slowSpeechStart == nil {
                 slowSpeechStart = now
             } else if now.timeIntervalSince(slowSpeechStart!) > slowSpeechDuration {
-                tipSubject.send(CoachingTip(
+                emit(CoachingTip(
                     type: .speakingTooSlow,
                     message: "Pick up the pace — you're at \(Int(wpm)) words per minute",
                     severity: .info
@@ -164,7 +187,7 @@ final class SpeechCoach: ObservableObject {
 
         // Too quiet: speaking detected but well below ideal volume range
         if speaking && level < quietThreshold {
-            tipSubject.send(CoachingTip(
+            emit(CoachingTip(
                 type: .tooQuiet,
                 message: "Speak up — your voice is hard to hear",
                 severity: .warning
@@ -186,7 +209,7 @@ final class SpeechCoach: ObservableObject {
             // Rambling detection
             if let start = continuousSpeechStart,
                now.timeIntervalSince(start) > ramblingThreshold {
-                tipSubject.send(CoachingTip(
+                emit(CoachingTip(
                     type: .rambling,
                     message: "You've been talking for \(Int(now.timeIntervalSince(start)))s — take a breath",
                     severity: .suggestion

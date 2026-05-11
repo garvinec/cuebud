@@ -27,11 +27,28 @@ xcodebuild test -scheme CueBud -destination 'platform=macOS' \
 xcodebuild build -scheme CueBud -destination 'platform=macOS'
 ```
 
-Open `CueBud.xcodeproj` and press Cmd+R to run. On first launch, the onboarding flow walks through microphone, camera, and speech-recognition permission grants.
+Open `CueBud.xcodeproj` and press Cmd+R to run. On first launch the app shows a Google sign-in screen; after auth the onboarding flow walks through microphone, camera, and speech-recognition permission grants.
 
 ## Architecture
 
-The app is a one-way reactive pipeline from **raw sensors → analyzed snapshots → coaching decisions → UI**, wired with Combine `PassthroughSubject`s. Understanding these seams is essential before modifying anything non-trivial:
+### App launch flow
+
+```
+CueBudApp
+  └─ auth.currentUser == nil  →  LoginView
+  └─ !hasCompletedOnboarding  →  OnboardingView
+  └─ else                     →  OverlayView (coaching session)
+```
+
+`AuthService` (`Services/AuthService.swift`) is owned by `CueBudApp` as a `@StateObject` and is **independent of the coaching pipeline**. It performs a Google OAuth PKCE flow, exchanges the code for tokens, upserts the user into Supabase (`users` table), and stores the refresh token in the Keychain via `KeychainHelper` (`Utilities/KeychainHelper.swift`). On every launch it silently refreshes the session in the background (`refreshSessionInBackground()`). `handleCallbackURL(_:)` must remain wired to `.onOpenURL` in `CueBudApp` — that is the only place macOS routes the OAuth custom-scheme callback back into the app.
+
+User profile (`AuthUser`) is cached in `UserDefaults` (`cuebud.currentUser`) so the first render skips `LoginView` for returning users without a network round-trip. `signOut()` clears both the Keychain refresh token and the UserDefaults cache.
+
+`SettingsView` receives `AuthService` as an `@EnvironmentObject` (injected in `CueBudApp`) and shows account info plus a Sign Out button.
+
+### Coaching pipeline
+
+The coaching layer is a one-way reactive pipeline from **raw sensors → analyzed snapshots → coaching decisions → UI**, wired with Combine `PassthroughSubject`s. Understanding these seams is essential before modifying anything non-trivial:
 
 ```
 AudioAnalysisService ──segmentSubject/partialTranscriptSubject──▶ SpeechCoach ──tipSubject──┐

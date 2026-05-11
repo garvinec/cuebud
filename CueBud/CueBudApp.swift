@@ -3,6 +3,18 @@ import SwiftUI
 @main
 struct CueBudApp: App {
     @StateObject private var auth = AuthService()
+
+    init() {
+        UserDefaults.standard.register(defaults: [
+            "maxFillersPerMinute": 3,
+            "maxWPM": 170.0,
+            "minWPM": 100.0,
+            "ramblingThreshold": 90.0,
+            "tipCooldown": 90.0,
+            "showSpeechTips": true,
+            "showPostureTips": true,
+        ])
+    }
     @StateObject private var permissions = PermissionsManager()
     @StateObject private var sessionVM = SessionViewModel()
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
@@ -80,6 +92,7 @@ struct CueBudApp: App {
 /// Menu bar dropdown with quick controls
 struct MenuBarView: View {
     @ObservedObject var sessionVM: SessionViewModel
+    @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         VStack {
@@ -95,8 +108,15 @@ struct MenuBarView: View {
 
             Divider()
 
-            SettingsLink {
-                Text("Settings...")
+            Button("Settings...") {
+                NSApp.activate(ignoringOtherApps: true)
+                openSettings()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    if let w = NSApp.windows.first(where: { $0.title == "Settings" }) {
+                        w.level = .floating
+                        w.makeKeyAndOrderFront(nil)
+                    }
+                }
             }
             .keyboardShortcut(",", modifiers: .command)
 

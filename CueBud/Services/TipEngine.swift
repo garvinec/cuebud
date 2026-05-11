@@ -30,6 +30,19 @@ final class TipEngine: ObservableObject {
     private var sessionStartTime: Date?
     private var graceTimer: Timer?
 
+    init() {
+        loadSettings()
+        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.loadSettings() }
+            .store(in: &cancellables)
+    }
+
+    private func loadSettings() {
+        let v = UserDefaults.standard.double(forKey: "tipCooldown")
+        if v > 0 { cooldownInterval = v }
+    }
+
     func startSession() {
         sessionStartTime = Date()
         activeTip = nil

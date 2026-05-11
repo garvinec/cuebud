@@ -139,6 +139,11 @@ final class PostureCoach: ObservableObject {
         }
     }
 
+    private func emit(_ tip: CoachingTip) {
+        guard UserDefaults.standard.object(forKey: "showPostureTips") as? Bool ?? true else { return }
+        tipSubject.send(tip)
+    }
+
     private func checkCondition(
         isActive: Bool,
         start: inout Date?,
@@ -152,7 +157,7 @@ final class PostureCoach: ObservableObject {
             if start == nil {
                 start = now
             } else if now.timeIntervalSince(start!) > threshold {
-                tipSubject.send(CoachingTip(
+                emit(CoachingTip(
                     type: tipType,
                     message: message,
                     severity: severity

@@ -1,4 +1,8 @@
 name: CueBud
+packages:
+  Supabase:
+    url: https://github.com/supabase-community/supabase-swift
+    from: "2.0.0"
 options:
   bundleIdPrefix: com.cuebud
   deploymentTarget:
@@ -16,6 +20,9 @@ targets:
     platform: macOS
     sources:
       - CueBud
+    dependencies:
+      - package: Supabase
+        product: Supabase
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.cuebud.app
@@ -28,6 +35,7 @@ targets:
         INFOPLIST_KEY_NSCameraUsageDescription: "CueBud needs camera access to analyze your posture and facial expressions during calls."
         INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "CueBud uses on-device speech recognition to detect filler words and speaking pace. Audio never leaves your device."
         ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION: YES
       debug:
         ENABLE_TESTABILITY: YES
 
