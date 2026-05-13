@@ -8,24 +8,16 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .fill(.background)
+                .fill(Color("LoginBackground"))
                 .shadow(color: .black.opacity(0.15), radius: 24, y: 8)
 
             VStack(spacing: 0) {
                 Spacer()
 
-                Image(systemName: "bubble.left.and.text.bubble.right.fill")
-                    .font(.system(size: 60))
-                    .foregroundStyle(.tint)
-                    .padding(.bottom, 24)
-
-                Text("CueBud")
-                    .font(.largeTitle.bold())
-                Text("Your real-time communication coach")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 4)
+                Image("HeroLockup")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 280)
 
                 Spacer()
 
@@ -60,7 +52,7 @@ struct LoginView: View {
             }
             .padding(.horizontal, 40)
         }
-        .frame(width: 380, height: 460)
+        .frame(width: 380, height: 320)
         .alert("Sign In Failed", isPresented: $showError, presenting: error) { _ in
             Button("OK") {}
         } message: { error in

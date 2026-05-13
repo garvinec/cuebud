@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B45747E47AC26B43694FF4E /* UpgradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E99AFD044D8A57ABC90D129 /* UpgradeView.swift */; };
 		2C9D26C501A9215E156849C6 /* MetricsBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1A6EEBE040DCA4877BF73C /* MetricsBadgeView.swift */; };
 		2D33E43426257B6F0505D8F7 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7A4EEA54D5B32DB48C9A5 /* OverlayView.swift */; };
+		31CEB36C32ABEFAFA513282E /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52529BE7B5A1FAE3BAEE25BA /* SubscriptionManager.swift */; };
 		37CBE5126E4DE073DD09FE40 /* PostureCoachTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD75C3C71943E9A89ADE133 /* PostureCoachTests.swift */; };
 		4078E755C93B03ABD7331685 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9A7CA47BC16F32A8AEC16D /* PermissionsManager.swift */; };
+		410E51C10E6AF11D36AD9726 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BECD7810471DBAEB6D76806F /* Assets.xcassets */; };
 		41CF47FFB6BF80108F9FB66A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A060EEF24082A70B4C46B20 /* LoginView.swift */; };
 		46D2D60B8E499652BF4511DC /* SpeechCoachTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3125CCD33813A444B706D5E /* SpeechCoachTests.swift */; };
 		55403896C4523CAAD5B72FC0 /* AudioLevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1751E324F5A0DD1B6DB8513 /* AudioLevelMeter.swift */; };
@@ -35,6 +38,7 @@
 		DD2FBC312397E967C44914FF /* FillerWordDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A2DE32AE2372E7BB745EFC /* FillerWordDetector.swift */; };
 		E23A7426F9898A2D0320D7DF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF47817D9B10B8101CA1B2E /* OnboardingView.swift */; };
 		EC100D9EA6E38284F177428B /* CueBudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE6865DD22DB5887C23CEC6 /* CueBudApp.swift */; };
+		EC249192875550945C1C3A93 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46F58AE0C8A2313BC4D762E /* FeedbackView.swift */; };
 		F654232895314E7AB141C72C /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE3DBDBDD19D134A28FB1562 /* KeychainHelper.swift */; };
 		FE8AECDCF271B5A5119AD84C /* OverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFABD7EC60D5D790EEBCA4C1 /* OverlayViewModel.swift */; };
 		FF06A3E606AAB79E1EC7BF29 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9BFFACB276DFD8546D2DE4 /* SettingsView.swift */; };
@@ -62,7 +66,9 @@
 		34B56EFF7951D24EE9B5D714 /* SessionMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionMetrics.swift; sourceTree = "<group>"; };
 		36699CA1D387B323E79B8EB9 /* TipEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipEngine.swift; sourceTree = "<group>"; };
 		4F306AB08F80CF0AD6C65BC0 /* SessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewModel.swift; sourceTree = "<group>"; };
+		52529BE7B5A1FAE3BAEE25BA /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
 		5A246BB5D8BF0D3452CB3C44 /* FillerWordDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordDetectorTests.swift; sourceTree = "<group>"; };
+		5E99AFD044D8A57ABC90D129 /* UpgradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeView.swift; sourceTree = "<group>"; };
 		668B9F494D0DE25547ACDAF9 /* SpeechCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCoach.swift; sourceTree = "<group>"; };
 		76761F27ECD36B881808937B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		84ABDC99B534358B84F068E3 /* CueBud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CueBud.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +80,7 @@
 		AE3DBDBDD19D134A28FB1562 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		AFABD7EC60D5D790EEBCA4C1 /* OverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModel.swift; sourceTree = "<group>"; };
 		B9587E3377A07C7F8FDB9F6F /* VideoAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnalysisService.swift; sourceTree = "<group>"; };
+		BECD7810471DBAEB6D76806F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF6FC02930ED97E1D4C78620 /* TipBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipBubbleView.swift; sourceTree = "<group>"; };
 		BF9BFFACB276DFD8546D2DE4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C930E1A13DFE7C6E45482D2F /* CueBudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CueBudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +90,7 @@
 		D1751E324F5A0DD1B6DB8513 /* AudioLevelMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioLevelMeter.swift; sourceTree = "<group>"; };
 		DBE6865DD22DB5887C23CEC6 /* CueBudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueBudApp.swift; sourceTree = "<group>"; };
 		E3125CCD33813A444B706D5E /* SpeechCoachTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechCoachTests.swift; sourceTree = "<group>"; };
+		E46F58AE0C8A2313BC4D762E /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		E8A2DE32AE2372E7BB745EFC /* FillerWordDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillerWordDetector.swift; sourceTree = "<group>"; };
 		FC8C0DCF72875F7A850B5209 /* TipEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipEngineTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +110,7 @@
 		28F9E543C97D13CCD5C2F9E4 /* CueBud */ = {
 			isa = PBXGroup;
 			children = (
+				BECD7810471DBAEB6D76806F /* Assets.xcassets */,
 				050EA4F44FD007EFB5753064 /* CueBud.entitlements */,
 				DBE6865DD22DB5887C23CEC6 /* CueBudApp.swift */,
 				76761F27ECD36B881808937B /* Info.plist */,
@@ -159,6 +168,7 @@
 		A29B07132FE761DC275D47B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E46F58AE0C8A2313BC4D762E /* FeedbackView.swift */,
 				2A060EEF24082A70B4C46B20 /* LoginView.swift */,
 				2A1A6EEBE040DCA4877BF73C /* MetricsBadgeView.swift */,
 				1EF47817D9B10B8101CA1B2E /* OnboardingView.swift */,
@@ -166,6 +176,7 @@
 				87AB4AC4D5825CD9AFB37AA3 /* SessionSummaryView.swift */,
 				BF9BFFACB276DFD8546D2DE4 /* SettingsView.swift */,
 				BF6FC02930ED97E1D4C78620 /* TipBubbleView.swift */,
+				5E99AFD044D8A57ABC90D129 /* UpgradeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -186,6 +197,7 @@
 				ABB5980DA96A8197091F20D2 /* AuthService.swift */,
 				035CC96E14CF6F33FD77B0AA /* PostureCoach.swift */,
 				668B9F494D0DE25547ACDAF9 /* SpeechCoach.swift */,
+				52529BE7B5A1FAE3BAEE25BA /* SubscriptionManager.swift */,
 				36699CA1D387B323E79B8EB9 /* TipEngine.swift */,
 				B9587E3377A07C7F8FDB9F6F /* VideoAnalysisService.swift */,
 			);
@@ -229,6 +241,7 @@
 			buildConfigurationList = 91DDBBB8993F0DD366EB128C /* Build configuration list for PBXNativeTarget "CueBud" */;
 			buildPhases = (
 				E13CAF969C8D0D00EDA7CA2E /* Sources */,
+				D365EA21EE058019CFD047AF /* Resources */,
 				E65E3AD368B147A67B6EE2FB /* Frameworks */,
 			);
 			buildRules = (
@@ -252,6 +265,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					406C29B7A0DBCD9D3F41EBF1 = {
+						DevelopmentTeam = "";
+					};
 				};
 			};
 			buildConfigurationList = 07B93360DF0F4065D48799A8 /* Build configuration list for PBXProject "CueBud" */;
@@ -277,6 +293,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		D365EA21EE058019CFD047AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				410E51C10E6AF11D36AD9726 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		38AC3F500B718A520E0F79BF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -299,6 +326,7 @@
 				899F2F1BE19008693E5B57ED /* AuthUser.swift in Sources */,
 				99BB3BEAE6FA1FE247ECCBB1 /* CoachingTip.swift in Sources */,
 				EC100D9EA6E38284F177428B /* CueBudApp.swift in Sources */,
+				EC249192875550945C1C3A93 /* FeedbackView.swift in Sources */,
 				DD2FBC312397E967C44914FF /* FillerWordDetector.swift in Sources */,
 				F654232895314E7AB141C72C /* KeychainHelper.swift in Sources */,
 				41CF47FFB6BF80108F9FB66A /* LoginView.swift in Sources */,
@@ -316,8 +344,10 @@
 				7E8B9AF8328ACF193A78A10E /* SpeechCoach.swift in Sources */,
 				A000FA4BBBE58B8E8777E911 /* SpeechPaceCalculator.swift in Sources */,
 				C2E32071C5BEBCB191BEC13C /* SpeechSegment.swift in Sources */,
+				31CEB36C32ABEFAFA513282E /* SubscriptionManager.swift in Sources */,
 				6E2344A47CAA5AED1E8E8578 /* TipBubbleView.swift in Sources */,
 				CB0A38B96F70EDB801E1BAA9 /* TipEngine.swift in Sources */,
+				0B45747E47AC26B43694FF4E /* UpgradeView.swift in Sources */,
 				A1ED5D3535B2CB9DFA3C5EEF /* VideoAnalysisService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,7 +522,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = CueBud/CueBud.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CueBud/Info.plist;
@@ -516,7 +549,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = CueBud/CueBud.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CueBud/Info.plist;

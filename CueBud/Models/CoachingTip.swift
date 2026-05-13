@@ -16,6 +16,46 @@ enum TipType: String, Codable, CaseIterable {
     case headTilt = "head_tilt"
     case tooClose = "too_close"
     case tooFar = "too_far"
+
+    var category: String {
+        switch self {
+        case .fillerWords: return "fillers"
+        case .speakingTooFast, .speakingTooSlow: return "pace"
+        case .tooQuiet: return "volume"
+        case .rambling: return "speech"
+        case .longPause: return "pause"
+        case .slouching, .headTilt: return "posture"
+        case .notLookingAtCamera: return "eye contact"
+        case .notSmiling: return "expression"
+        case .tooClose, .tooFar: return "distance"
+        }
+    }
+
+    var displayName: String {
+        switch self {
+        case .fillerWords: return "Filler words"
+        case .speakingTooFast: return "Speaking too fast"
+        case .speakingTooSlow: return "Speaking too slow"
+        case .tooQuiet: return "Too quiet"
+        case .rambling: return "Rambling"
+        case .longPause: return "Long pause"
+        case .slouching: return "Slouching"
+        case .notLookingAtCamera: return "Not looking at camera"
+        case .notSmiling: return "Not smiling"
+        case .headTilt: return "Head tilt"
+        case .tooClose: return "Too close"
+        case .tooFar: return "Too far"
+        }
+    }
+
+    var isSpeechTip: Bool {
+        switch self {
+        case .fillerWords, .speakingTooFast, .speakingTooSlow, .tooQuiet, .rambling, .longPause:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 enum TipSeverity: Int, Codable, Comparable {

@@ -3,6 +3,7 @@ import SwiftUI
 /// Post-call summary showing session statistics
 struct SessionSummaryView: View {
     let metrics: SessionMetrics
+    let sessionsRemaining: Int
     let onDismiss: () -> Void
 
     var body: some View {
@@ -59,6 +60,18 @@ struct SessionSummaryView: View {
 
             // Tips section
             SummaryRow(icon: "lightbulb", label: "Tips Shown", value: "\(metrics.tipsShown)")
+
+            if sessionsRemaining == 0 {
+                Text("You've used all your free sessions. Upgrade to keep coaching.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 4)
+            } else {
+                Text("\(sessionsRemaining) free session\(sessionsRemaining == 1 ? "" : "s") remaining")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
 
             Spacer()
         }

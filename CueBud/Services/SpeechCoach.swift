@@ -26,6 +26,7 @@ final class SpeechCoach: ObservableObject {
     private var wasSpeaking = false
     private var fastSpeechStart: Date?
     private var slowSpeechStart: Date?
+    private var lastSpeechRecognisedTime: Date?
 
     // Thresholds
     var maxFillersPerMinute = 3
@@ -107,6 +108,10 @@ final class SpeechCoach: ObservableObject {
         }
         lastCheckedTranscript = transcript
 
+        if !transcript.trimmingCharacters(in: .whitespaces).isEmpty {
+            lastSpeechRecognisedTime = Date()
+        }
+
         if !newText.isEmpty {
             let fillers = FillerWordDetector.count(in: newText)
             if fillers > 0 {
@@ -154,11 +159,13 @@ final class SpeechCoach: ObservableObject {
                 ))
                 fastSpeechStart = now
             }
-        } else {
+        } else if wpm > 0 {
+            // Only clear when actively speaking at an acceptable pace, not during silence
             fastSpeechStart = nil
         }
 
-        // Speaking too slow
+        // Speaking too slow — don't reset the timer during silence (wpm == 0); only
+        // reset when the user is provably speaking fast enough.
         if wpm > 0 && wpm < minWPM {
             if slowSpeechStart == nil {
                 slowSpeechStart = now
@@ -170,7 +177,7 @@ final class SpeechCoach: ObservableObject {
                 ))
                 slowSpeechStart = now
             }
-        } else {
+        } else if wpm >= minWPM {
             slowSpeechStart = nil
         }
     }
@@ -180,13 +187,15 @@ final class SpeechCoach: ObservableObject {
 
         let level = audioService.levelMeter.currentLevel
 
-        // Detect speaking: any audio above silence threshold
-        let speaking = level > -50
+        isSpeaking = level > -50
 
-        isSpeaking = speaking
+        // Only fire "too quiet" when speech has actually been recognised recently,
+        // not just when ambient noise is present above the silence floor.
+        let recentlySpeaking = lastSpeechRecognisedTime.map {
+            Date().timeIntervalSince($0) < 2.0
+        } ?? false
 
-        // Too quiet: speaking detected but well below ideal volume range
-        if speaking && level < quietThreshold {
+        if recentlySpeaking && level < quietThreshold {
             emit(CoachingTip(
                 type: .tooQuiet,
                 message: "Speak up — your voice is hard to hear",
@@ -236,5 +245,6 @@ final class SpeechCoach: ObservableObject {
         fastSpeechStart = nil
         slowSpeechStart = nil
         lastCheckedTranscript = ""
+        lastSpeechRecognisedTime = nil
     }
 }

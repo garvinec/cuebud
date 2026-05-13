@@ -26,6 +26,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.cuebud.app
+        DEVELOPMENT_TEAM: ""  # paste your Personal Team ID here (Xcode → Settings → Accounts)
+        CODE_SIGN_IDENTITY: "Apple Development"
         INFOPLIST_FILE: CueBud/Info.plist
         CODE_SIGN_ENTITLEMENTS: CueBud/CueBud.entitlements
         GENERATE_INFOPLIST_FILE: YES
@@ -36,6 +38,7 @@ targets:
         INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "CueBud uses on-device speech recognition to detect filler words and speaking pace. Audio never leaves your device."
         ENABLE_HARDENED_RUNTIME: YES
         CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
       debug:
         ENABLE_TESTABILITY: YES
 

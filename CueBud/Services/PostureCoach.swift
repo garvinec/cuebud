@@ -78,7 +78,16 @@ final class PostureCoach: ObservableObject {
         updatePosture(newPosture)
 
         // Tip generation (uses separate sustained timers, independent of display)
-        // Note: slouching tip removed — the Posture badge already shows slouching status
+
+        checkCondition(
+            isActive: snapshot.isSlouching,
+            start: &slouchStart,
+            now: now,
+            threshold: slouchDuration,
+            tipType: .slouching,
+            message: "Sit up — your posture is slouching",
+            severity: .suggestion
+        )
 
         checkCondition(
             isActive: snapshot.isLookingAway,

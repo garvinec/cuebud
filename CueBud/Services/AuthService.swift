@@ -2,6 +2,7 @@ import Foundation
 import CryptoKit
 import AppKit
 import Supabase
+import AuthenticationServices
 
 enum AuthError: LocalizedError {
     case cancelled
@@ -18,7 +19,7 @@ enum AuthError: LocalizedError {
 }
 
 @MainActor
-final class AuthService: ObservableObject {
+final class AuthService: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
     @Published var currentUser: AuthUser?
     @Published var isLoading = false
 
@@ -34,9 +35,9 @@ final class AuthService: ObservableObject {
     private let redirectURI = "com.googleusercontent.apps.689290117585-5mps9d5la1t4m72pa78b8je7lqqku0rq:/oauth2callback"
     private let googleTokenEndpoint = URL(string: "https://oauth2.googleapis.com/token")!
     private static let currentUserKey = "cuebud.currentUser"
-    private var pendingAuthContinuation: CheckedContinuation<URL, Error>?
+    private var activeAuthSession: ASWebAuthenticationSession?
 
-    init() {
+    override init() {
         // Restore cached user instantly — refreshSessionInBackground() verifies the session
         if let data = UserDefaults.standard.data(forKey: Self.currentUserKey),
            let user = try? JSONDecoder().decode(AuthUser.self, from: data) {
@@ -49,7 +50,8 @@ final class AuthService: ObservableObject {
         Task {
             do {
                 let session = try await supabase.auth.session
-                let user = authUser(from: session)
+                var user = authUser(from: session)
+                user.tier = await fetchTier(userID: user.id)
                 currentUser = user
                 saveUserLocally(user)
             } catch {
@@ -103,20 +105,53 @@ final class AuthService: ObservableObject {
         }
     }
 
+    func submitFeedback(_ content: String) async throws {
+        guard let user = currentUser, let userId = UUID(uuidString: user.id) else { return }
+        struct FeedbackEntry: Encodable {
+            let user_id: UUID
+            let content: String
+        }
+        try await supabase.from("feedback").insert(FeedbackEntry(user_id: userId, content: content)).execute()
+    }
+
     func handleCallbackURL(_ url: URL) {
+        // ASWebAuthenticationSession intercepts the callback before it reaches here.
+        // This remains wired in CueBudApp as a safety net.
         NSApp.activate(ignoringOtherApps: true)
-        pendingAuthContinuation?.resume(returning: url)
-        pendingAuthContinuation = nil
+    }
+
+    // MARK: - ASWebAuthenticationPresentationContextProviding
+
+    nonisolated func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        MainActor.assumeIsolated {
+            NSApp.keyWindow ?? NSApp.windows.first ?? NSWindow()
+        }
     }
 
     // MARK: - Private
 
     private func openBrowserAndWaitForCallback(url: URL) async throws -> URL {
-        pendingAuthContinuation?.resume(throwing: AuthError.cancelled)
-        pendingAuthContinuation = nil
+        activeAuthSession?.cancel()
+        activeAuthSession = nil
+
         return try await withCheckedThrowingContinuation { continuation in
-            self.pendingAuthContinuation = continuation
-            NSWorkspace.shared.open(url)
+            let scheme = URL(string: self.redirectURI)?.scheme ?? ""
+            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: scheme) { [weak self] callbackURL, error in
+                self?.activeAuthSession = nil
+                if let asError = error as? ASWebAuthenticationSessionError, asError.code == .canceledLogin {
+                    continuation.resume(throwing: AuthError.cancelled)
+                } else if let error {
+                    continuation.resume(throwing: error)
+                } else if let callbackURL {
+                    continuation.resume(returning: callbackURL)
+                } else {
+                    continuation.resume(throwing: AuthError.invalidCallback)
+                }
+            }
+            session.presentationContextProvider = self
+            session.prefersEphemeralWebBrowserSession = false
+            activeAuthSession = session
+            session.start()
         }
     }
 
@@ -158,6 +193,21 @@ final class AuthService: ObservableObject {
         let last_sign_in_at: Date
     }
 
+    private struct UserTierRow: Decodable {
+        let tier: String
+    }
+
+    func fetchTier(userID: String) async -> String {
+        guard let uuid = UUID(uuidString: userID) else { return "free" }
+        let rows: [UserTierRow] = (try? await supabase
+            .from("users")
+            .select("tier")
+            .eq("id", value: uuid)
+            .execute()
+            .value) ?? []
+        return rows.first?.tier ?? "free"
+    }
+
     @discardableResult
     private func upsertProfile(session: Session) async throws -> AuthUser {
         let meta = session.user.userMetadata
@@ -175,12 +225,14 @@ final class AuthService: ObservableObject {
         )
         try await supabase.from("users").upsert(profile, onConflict: "id").execute()
 
+        let tier = await fetchTier(userID: session.user.id.uuidString)
         return AuthUser(
             id: session.user.id.uuidString,
             email: session.user.email ?? "",
             name: name,
             pictureURL: pictureURL,
-            joinedAt: session.user.createdAt
+            joinedAt: session.user.createdAt,
+            tier: tier
         )
     }
 

@@ -2,33 +2,29 @@ import Foundation
 import Combine
 
 /// Manages tip cooldowns, priority, deduplication, and display queue.
-/// Tips persist while their condition is active and auto-dismiss only
+/// Up to 3 tips can be shown simultaneously. Each tip auto-dismisses
 /// after the condition clears (no re-emission within the grace period).
 @MainActor
 final class TipEngine: ObservableObject {
-    @Published var activeTip: CoachingTip?
+    @Published var activeTips: [CoachingTip] = []
     @Published var tipHistory: [CoachingTip] = []
 
-    /// Publisher for tips that should be displayed
     let displayTipSubject = PassthroughSubject<CoachingTip, Never>()
 
     private var cancellables = Set<AnyCancellable>()
     private var pendingQueue: [CoachingTip] = []
-
-    // Cooldown tracking: last dismissed time per tip type
     private var lastDismissedTime: [TipType: Date] = [:]
+    private var graceTimers: [UUID: Timer] = [:]
 
-    // Tracks last time the active tip's condition was re-confirmed
-    private var lastReEmitTime: Date?
-
-    // Configuration
     var cooldownInterval: TimeInterval = 90
-    /// How long after the last re-emission before auto-dismissing (condition cleared)
-    var gracePeriod: TimeInterval = 2
+    var gracePeriod: TimeInterval = 3
     var warmupDuration: TimeInterval = 15
+    private let maxActiveTips = 3
 
     private var sessionStartTime: Date?
-    private var graceTimer: Timer?
+
+    // Backwards-compat for tests and any callers that expect a single tip
+    var activeTip: CoachingTip? { activeTips.first }
 
     init() {
         loadSettings()
@@ -45,119 +41,101 @@ final class TipEngine: ObservableObject {
 
     func startSession() {
         sessionStartTime = Date()
-        activeTip = nil
+        activeTips.removeAll()
         pendingQueue.removeAll()
         lastDismissedTime.removeAll()
         tipHistory.removeAll()
-        lastReEmitTime = nil
+        graceTimers.values.forEach { $0.invalidate() }
+        graceTimers.removeAll()
     }
 
     func endSession() {
         sessionStartTime = nil
-        graceTimer?.invalidate()
-        graceTimer = nil
-        activeTip = nil
+        activeTips.removeAll()
         pendingQueue.removeAll()
+        graceTimers.values.forEach { $0.invalidate() }
+        graceTimers.removeAll()
     }
 
-    /// Connect to tip sources (speech coach, posture coach)
     func subscribe(to publisher: AnyPublisher<CoachingTip, Never>) {
         publisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] tip in
-                self?.enqueue(tip)
-            }
+            .sink { [weak self] tip in self?.enqueue(tip) }
             .store(in: &cancellables)
     }
 
-    /// Enqueue a tip for display (applies filtering)
+    private func isTipTypeEnabled(_ type: TipType) -> Bool {
+        let categoryKey = type.isSpeechTip ? "showSpeechTips" : "showPostureTips"
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: categoryKey) != nil && !defaults.bool(forKey: categoryKey) { return false }
+        let perTypeKey = "tipEnabled_\(type.rawValue)"
+        if defaults.object(forKey: perTypeKey) != nil && !defaults.bool(forKey: perTypeKey) { return false }
+        return true
+    }
+
     func enqueue(_ tip: CoachingTip) {
-        // Warmup check
-        if let start = sessionStartTime,
-           Date().timeIntervalSince(start) < warmupDuration {
+        guard let start = sessionStartTime,
+              Date().timeIntervalSince(start) >= warmupDuration else { return }
+        guard isTipTypeEnabled(tip.type) else { return }
+
+        // If same type is already active, reset its grace timer (condition still active)
+        if let existing = activeTips.first(where: { $0.type == tip.type }) {
+            resetGraceTimer(for: existing)
             return
         }
 
-        // If this is the same type as the active tip, the condition is still active —
-        // refresh the grace timer so the tip stays visible.
-        if activeTip?.type == tip.type {
-            lastReEmitTime = Date()
-            resetGraceTimer()
-            return
-        }
-
-        // Cooldown check (based on when the tip was last *dismissed*, not shown)
         if let lastDismissed = lastDismissedTime[tip.type],
-           Date().timeIntervalSince(lastDismissed) < cooldownInterval {
-            return
-        }
+           Date().timeIntervalSince(lastDismissed) < cooldownInterval { return }
 
-        // Deduplication: don't re-queue if same type already pending
-        if pendingQueue.contains(where: { $0.type == tip.type }) {
-            return
-        }
+        if pendingQueue.contains(where: { $0.type == tip.type }) { return }
 
         pendingQueue.append(tip)
         pendingQueue.sort { $0.severity > $1.severity }
-
-        if activeTip == nil {
-            showNextTip()
-        }
+        showNextTips()
     }
 
-    /// Manually dismiss via user tap
+    // Backwards-compat: dismisses the first active tip
     func userDismiss() {
-        guard let tip = activeTip else { return }
-        graceTimer?.invalidate()
-        graceTimer = nil
-        lastDismissedTime[tip.type] = Date()
-        activeTip = nil
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.showNextTip()
+        if let first = activeTips.first {
+            dismiss(id: first.id)
         }
     }
 
-    private func showNextTip() {
-        guard !pendingQueue.isEmpty else { return }
-
-        let tip = pendingQueue.removeFirst()
-
-        // Final cooldown check
-        if let lastDismissed = lastDismissedTime[tip.type],
-           Date().timeIntervalSince(lastDismissed) < cooldownInterval {
-            showNextTip()
-            return
-        }
-
-        activeTip = tip
-        lastReEmitTime = Date()
-        tipHistory.append(tip)
-        displayTipSubject.send(tip)
-
-        resetGraceTimer()
+    func userDismiss(id: UUID) {
+        dismiss(id: id)
     }
 
-    /// Start/restart the grace timer. If the condition is still active, coaches will
-    /// re-emit and call `enqueue` which resets this timer. If they stop re-emitting,
-    /// the timer fires and the tip auto-dismisses.
-    private func resetGraceTimer() {
-        graceTimer?.invalidate()
-        graceTimer = Timer.scheduledTimer(withTimeInterval: gracePeriod, repeats: false) { [weak self] _ in
+    private func showNextTips() {
+        while !pendingQueue.isEmpty && activeTips.count < maxActiveTips {
+            let tip = pendingQueue.removeFirst()
+            if let lastDismissed = lastDismissedTime[tip.type],
+               Date().timeIntervalSince(lastDismissed) < cooldownInterval { continue }
+            activeTips.append(tip)
+            tipHistory.append(tip)
+            displayTipSubject.send(tip)
+            resetGraceTimer(for: tip)
+        }
+    }
+
+    private func resetGraceTimer(for tip: CoachingTip) {
+        graceTimers[tip.id]?.invalidate()
+        graceTimers[tip.id] = Timer.scheduledTimer(withTimeInterval: gracePeriod, repeats: false) { [weak self] _ in
             Task { @MainActor in
-                self?.gracePeriodExpired()
+                self?.dismiss(id: tip.id)
             }
         }
     }
 
-    private func gracePeriodExpired() {
-        guard let tip = activeTip else { return }
-        graceTimer = nil
+    private func dismiss(id: UUID) {
+        guard let idx = activeTips.firstIndex(where: { $0.id == id }) else { return }
+        let tip = activeTips[idx]
+        graceTimers[id]?.invalidate()
+        graceTimers.removeValue(forKey: id)
         lastDismissedTime[tip.type] = Date()
-        activeTip = nil
+        activeTips.remove(at: idx)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.showNextTip()
+            self?.showNextTips()
         }
     }
 }

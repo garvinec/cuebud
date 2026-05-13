@@ -17,8 +17,10 @@ final class SessionViewModel: ObservableObject {
     let speechCoach: SpeechCoach
     let postureCoach: PostureCoach
     let tipEngine: TipEngine
+    private let subscriptionManager: SubscriptionManager
 
-    init() {
+    init(subscriptionManager: SubscriptionManager) {
+        self.subscriptionManager = subscriptionManager
         audioService = AudioAnalysisService()
         videoService = VideoAnalysisService()
         speechCoach = SpeechCoach(audioService: audioService)
@@ -111,6 +113,7 @@ final class SessionViewModel: ObservableObject {
         postureCoach.reset()
 
         showSummary = true
+        subscriptionManager.recordSessionCompleted()
     }
 
     func toggleSession() {

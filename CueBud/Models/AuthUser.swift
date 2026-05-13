@@ -6,4 +6,5 @@ struct AuthUser: Codable, Equatable {
     let name: String
     let pictureURL: URL?
     var joinedAt: Date?
+    var tier: String = "free"
 }
