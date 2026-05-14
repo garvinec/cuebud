@@ -13,7 +13,7 @@ struct OnboardingView: View {
             HStack(spacing: 8) {
                 ForEach(0..<3, id: \.self) { step in
                     Circle()
-                        .fill(step <= currentStep ? Color.accentColor : Color.secondary.opacity(0.3))
+                        .fill(step <= currentStep ? Color("AccentColor") : Color.secondary.opacity(0.3))
                         .frame(width: 8, height: 8)
                 }
             }
@@ -31,14 +31,18 @@ struct OnboardingView: View {
         }
         .padding(32)
         .frame(width: 420, height: 380)
-        .background(.ultraThinMaterial)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color("LoginBackground"))
+                .shadow(color: .black.opacity(0.15), radius: 24, y: 8)
+        )
     }
 
     private var welcomeStep: some View {
         VStack(spacing: 16) {
             Image(systemName: "hand.wave.fill")
                 .font(.system(size: 48))
-                .foregroundColor(.accentColor)
+                .foregroundColor(Color("AccentColor"))
 
             Text("Welcome to CueBud")
                 .font(.title.weight(.bold))
@@ -157,7 +161,7 @@ struct PermissionRow: View {
         HStack {
             Image(systemName: icon)
                 .font(.system(size: 16))
-                .foregroundColor(.accentColor)
+                .foregroundColor(Color("AccentColor"))
                 .frame(width: 28)
 
             VStack(alignment: .leading) {
@@ -184,7 +188,7 @@ struct TutorialItem: View {
         HStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.system(size: 11))
-                .foregroundColor(.accentColor)
+                .foregroundColor(Color("AccentColor"))
                 .frame(width: 16)
             Text(text)
                 .font(.system(size: 12))
