@@ -10,6 +10,7 @@ struct SettingsView: View {
     @AppStorage("tipCooldown") private var tipCooldown: Double = 90
     @AppStorage("showPostureTips") private var showPostureTips = true
     @AppStorage("showSpeechTips") private var showSpeechTips = true
+    @AppStorage("showScreenShareReminder") private var showScreenShareReminder = true
 
     private static let speechTipTypes: [TipType] = [.fillerWords, .speakingTooFast, .speakingTooSlow, .tooQuiet, .rambling]
     private static let postureTipTypes: [TipType] = [.slouching, .notLookingAtCamera, .notSmiling, .headTilt, .tooClose, .tooFar]
@@ -127,6 +128,13 @@ struct SettingsView: View {
                 }
                 Slider(value: $tipCooldown, in: 30...180, step: 10)
                 Text("How long to wait before showing the same cue again after you dismiss it.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            Section("Screen Sharing") {
+                Toggle("Show screen share setup reminder", isOn: $showScreenShareReminder)
+                Text("Displays a reminder in the overlay until you've set up screen sharing to hide CueBud from other participants.")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

@@ -114,6 +114,7 @@ struct CueBudApp: App {
             window.hasShadow = false
             window.isMovableByWindowBackground = true
             window.hidesOnDeactivate = false
+            window.sharingType = .none
 
             // Snap to top-right, just below the menu bar.
             let sf = screen.visibleFrame

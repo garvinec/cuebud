@@ -2,7 +2,6 @@ import Foundation
 import CryptoKit
 import AppKit
 import Supabase
-import AuthenticationServices
 
 enum AuthError: LocalizedError {
     case cancelled
@@ -19,7 +18,7 @@ enum AuthError: LocalizedError {
 }
 
 @MainActor
-final class AuthService: NSObject, ObservableObject, ASWebAuthenticationPresentationContextProviding {
+final class AuthService: ObservableObject {
     @Published var currentUser: AuthUser?
     @Published var isLoading = false
 
@@ -35,9 +34,9 @@ final class AuthService: NSObject, ObservableObject, ASWebAuthenticationPresenta
     private let redirectURI = "com.googleusercontent.apps.689290117585-5mps9d5la1t4m72pa78b8je7lqqku0rq:/oauth2callback"
     private let googleTokenEndpoint = URL(string: "https://oauth2.googleapis.com/token")!
     private static let currentUserKey = "cuebud.currentUser"
-    private var activeAuthSession: ASWebAuthenticationSession?
+    private var callbackContinuation: CheckedContinuation<URL, Error>?
 
-    override init() {
+    init() {
         // Restore cached user instantly — refreshSessionInBackground() verifies the session
         if let data = UserDefaults.standard.data(forKey: Self.currentUserKey),
            let user = try? JSONDecoder().decode(AuthUser.self, from: data) {
@@ -115,43 +114,21 @@ final class AuthService: NSObject, ObservableObject, ASWebAuthenticationPresenta
     }
 
     func handleCallbackURL(_ url: URL) {
-        // ASWebAuthenticationSession intercepts the callback before it reaches here.
-        // This remains wired in CueBudApp as a safety net.
+        guard let continuation = callbackContinuation else { return }
+        callbackContinuation = nil
         NSApp.activate(ignoringOtherApps: true)
-    }
-
-    // MARK: - ASWebAuthenticationPresentationContextProviding
-
-    nonisolated func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        MainActor.assumeIsolated {
-            NSApp.keyWindow ?? NSApp.windows.first ?? NSWindow()
-        }
+        continuation.resume(returning: url)
     }
 
     // MARK: - Private
 
     private func openBrowserAndWaitForCallback(url: URL) async throws -> URL {
-        activeAuthSession?.cancel()
-        activeAuthSession = nil
+        callbackContinuation?.resume(throwing: AuthError.cancelled)
+        callbackContinuation = nil
 
         return try await withCheckedThrowingContinuation { continuation in
-            let scheme = URL(string: self.redirectURI)?.scheme ?? ""
-            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: scheme) { [weak self] callbackURL, error in
-                self?.activeAuthSession = nil
-                if let asError = error as? ASWebAuthenticationSessionError, asError.code == .canceledLogin {
-                    continuation.resume(throwing: AuthError.cancelled)
-                } else if let error {
-                    continuation.resume(throwing: error)
-                } else if let callbackURL {
-                    continuation.resume(returning: callbackURL)
-                } else {
-                    continuation.resume(throwing: AuthError.invalidCallback)
-                }
-            }
-            session.presentationContextProvider = self
-            session.prefersEphemeralWebBrowserSession = false
-            activeAuthSession = session
-            session.start()
+            callbackContinuation = continuation
+            NSWorkspace.shared.open(url)
         }
     }
 
