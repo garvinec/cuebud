@@ -23,7 +23,7 @@ struct OverlayView: View {
             }
 
             CueBudBadge(
-                isActive: sessionVM.isSessionActive,
+                isActive: sessionVM.isSessionActive || sessionVM.isRequestingPermissions,
                 duration: sessionVM.isSessionActive ? sessionVM.formattedDuration : nil,
                 onToggle: { sessionVM.toggleSession() }
             )

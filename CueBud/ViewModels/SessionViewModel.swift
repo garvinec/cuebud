@@ -1,10 +1,14 @@
 import Foundation
+import AVFoundation
+import Speech
 import Combine
 
 /// Manages session lifecycle and aggregated metrics
 @MainActor
 final class SessionViewModel: ObservableObject {
     @Published var isSessionActive = false
+    /// True while awaiting microphone/speech permission — blocks duplicate start attempts.
+    @Published var isRequestingPermissions = false
     @Published var metrics = SessionMetrics()
     @Published var sessionDuration: TimeInterval = 0
     @Published var showSummary = false
@@ -79,8 +83,27 @@ final class SessionViewModel: ObservableObject {
     }
 
     func startSession() {
-        guard !isSessionActive else { return }
+        guard !isSessionActive && !isRequestingPermissions else { return }
+        isRequestingPermissions = true
+        Task { await startSessionAfterPermissions() }
+    }
 
+    private func startSessionAfterPermissions() async {
+        let micGranted = await AVCaptureDevice.requestAccess(for: .audio)
+        guard micGranted && isRequestingPermissions else {
+            isRequestingPermissions = false
+            return
+        }
+
+        let speechStatus = await withCheckedContinuation { (cont: CheckedContinuation<SFSpeechRecognizerAuthorizationStatus, Never>) in
+            SFSpeechRecognizer.requestAuthorization { cont.resume(returning: $0) }
+        }
+        guard speechStatus == .authorized && isRequestingPermissions else {
+            isRequestingPermissions = false
+            return
+        }
+
+        isRequestingPermissions = false
         metrics = SessionMetrics()
         isSessionActive = true
         showSummary = false
@@ -98,6 +121,13 @@ final class SessionViewModel: ObservableObject {
     }
 
     func stopSession() {
+        if isRequestingPermissions {
+            // Cancel the in-flight permission request — startSessionAfterPermissions()
+            // checks this flag before touching any services.
+            isRequestingPermissions = false
+            return
+        }
+
         guard isSessionActive else { return }
 
         isSessionActive = false
@@ -117,7 +147,7 @@ final class SessionViewModel: ObservableObject {
     }
 
     func toggleSession() {
-        if isSessionActive {
+        if isSessionActive || isRequestingPermissions {
             stopSession()
         } else {
             startSession()

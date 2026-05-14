@@ -16,9 +16,12 @@ struct UpgradeView: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
 
-            Button("Upgrade to Pro") {}
-                .buttonStyle(.borderedProminent)
-                .disabled(true)
+            Button("Upgrade to Pro") {
+                if let url = URL(string: "https://trycuebud.com/#pricing") {
+                    NSWorkspace.shared.open(url)
+                }
+            }
+            .buttonStyle(.borderedProminent)
         }
         .padding(20)
         .frame(width: 280)

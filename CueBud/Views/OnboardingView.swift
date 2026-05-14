@@ -6,6 +6,7 @@ struct OnboardingView: View {
     let onComplete: () -> Void
 
     @State private var currentStep = 0
+    @State private var isRequestingPermissions = false
 
     var body: some View {
         VStack(spacing: 24) {
@@ -96,8 +97,10 @@ struct OnboardingView: View {
             Spacer()
 
             Button("Grant Permissions") {
+                isRequestingPermissions = true
                 Task {
                     await permissions.requestAllPermissions()
+                    isRequestingPermissions = false
                     if permissions.allGranted {
                         withAnimation { currentStep = 2 }
                     }
@@ -105,6 +108,7 @@ struct OnboardingView: View {
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
+            .disabled(isRequestingPermissions)
 
             if permissions.anyDenied {
                 Button("Open System Settings") {
