@@ -26,7 +26,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.cuebud.app
-        DEVELOPMENT_TEAM: ""  # paste your Team ID here (Xcode → Settings → Accounts → your name → Team ID)
+        DEVELOPMENT_TEAM: "85NX4R2KWQ"
         CODE_SIGN_IDENTITY: "Apple Development"
         INFOPLIST_FILE: CueBud/Info.plist
         CODE_SIGN_ENTITLEMENTS: CueBud/CueBud.entitlements
